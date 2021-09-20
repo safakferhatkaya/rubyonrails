@@ -6,7 +6,7 @@ class HolidaysController < ApplicationController
     @holidays = Holiday.all
   end
 
-  # GET /holidays/1 or /holidays/1.json
+  # GET /holidays/1 or /holidays/1.jsons
   def show
   end
 
@@ -55,7 +55,6 @@ class HolidaysController < ApplicationController
       format.json { head :no_content }
     end
   end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_holiday
