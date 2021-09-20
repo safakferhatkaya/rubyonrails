@@ -5,6 +5,7 @@ class HolidaysController < ApplicationController
   def index
     @holidays = Holiday.all
   end
+    
 
   # GET /holidays/1 or /holidays/1.jsons
   def show
