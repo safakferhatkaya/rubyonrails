@@ -1,4 +1,6 @@
 class Holiday < ApplicationRecord
+ #   validates: holiday_name,  uniqueness: true
+
     require 'ruby-holidayapi'
     require 'json'
     require 'i18n_data'

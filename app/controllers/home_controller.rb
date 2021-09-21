@@ -4,10 +4,9 @@ class HomeController < ApplicationController
   def about
   end
   def countries
-    country_list = []
-    country_list = Array.new
-    require 'i18n_data'
+    I18nData.countries.flatten
+    @country_and_names_print = I18nData.countries.flatten
+    @handle_comma_country = (@country_and_names_print).select {|i| (i).length < 3}
 
-  
   end
 end
