@@ -1,23 +1,10 @@
 class HolidaysController < ApplicationController
-  before_action :set_holiday, only: %i[ show edit update destroy ]
-
   # GET /holidays or /holidays.json
+  
   def index
-    @holidays = Holiday.all
-  end
-    
-
-  # GET /holidays/1 or /holidays/1.jsons
-  def show
-  end
-
-  # GET /holidays/new
-  def new
-    @holiday = Holiday.new
-  end
-
-  # GET /holidays/1/edit
-  def edit
+    @q = Holiday.ransack(params[:q])
+    @holidays = @q.result(distinct: true)
+    @search = Holiday.search(params[:q])
   end
 
   # POST /holidays or /holidays.json
@@ -34,7 +21,9 @@ class HolidaysController < ApplicationController
       end
     end
   end
-
+  def type
+    @countries = Holiday.distinct.pluck(:country)
+  end
   # PATCH/PUT /holidays/1 or /holidays/1.json
   def update
     respond_to do |format|
@@ -55,7 +44,8 @@ class HolidaysController < ApplicationController
       format.html { redirect_to holidays_url, notice: "Holiday was successfully destroyed." }
       format.json { head :no_content }
     end
-  end
+end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_holiday
