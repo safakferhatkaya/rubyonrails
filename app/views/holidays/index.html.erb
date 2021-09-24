@@ -3,6 +3,7 @@
 h1{text-align: center;}
 f.label{text-align: center;}
 </style>
+
 <h1>Holidays</h1>
 <%= search_form_for @q do |f| %>
 
@@ -11,19 +12,20 @@ f.label{text-align: center;}
   <%= f.label :holiday_name %>:
   <%= f.search_field :holiday_name_cont, class: 'form-control' %>
   <div style="line-height:150%;">
-<br>
+    <br>
   </div>
   <%= f.label :country %>  : 
   <%= f.select :country_cont, (I18nData.countries.flatten).select {|i| (i).length < 3}%>
-      
-<br>
+    <br>
     <div class="col-md-12 text-center">
-      <%= link_to "Clear", request.path, class: "btn btn-primary"%>
-      <%= f.submit class: 'btn btn-primary'%>
+        <%= link_to "Clear", request.path, class: "btn btn-primary"%>
+        <%= f.submit class: 'btn btn-primary'%>
     </div>
-
 <% end %>
-
+<%=
+  link_to 'Download as Excel',
+  holidays_path(format: :xlsx)
+%>
 <p>
 <table class="table table-striped table-bordered">
   <thead class="thead-dark">
@@ -41,14 +43,7 @@ f.label{text-align: center;}
         <td><%= holiday.holiday_name %></td>
         <td><%= holiday.date %></td>
         <td><%= holiday.country %></td>
-        <td><%= link_to 'Show', holiday %></td>
-        <td><%= link_to 'Edit', edit_holiday_path(holiday) %></td>
-        <td><%= link_to 'Destroy', holiday, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Holiday', new_holiday_path,class:"btn btn-secondary" %>
+</table><br></br>

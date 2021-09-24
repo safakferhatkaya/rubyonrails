@@ -1,13 +1,17 @@
 class HolidaysController < ApplicationController
-  # GET /holidays or /holidays.json
   
   def index
     @q = Holiday.ransack(params[:q])
     @holidays = @q.result(distinct: true)
     @search = Holiday.search(params[:q])
+    respond_to do |format|
+      format.xlsx{
+        response.headers['Content-Disposition'] = 'attachment; filename=holidays.xlsx'
+      }
+      format.html{ render :index }
+    end
   end
 
-  # POST /holidays or /holidays.json
   def create
     @holiday = Holiday.new(holiday_params)
 
@@ -21,10 +25,7 @@ class HolidaysController < ApplicationController
       end
     end
   end
-  def type
-    @countries = Holiday.distinct.pluck(:country)
-  end
-  # PATCH/PUT /holidays/1 or /holidays/1.json
+
   def update
     respond_to do |format|
       if @holiday.update(holiday_params)
@@ -37,17 +38,19 @@ class HolidaysController < ApplicationController
     end
   end
 
-  # DELETE /holidays/1 or /holidays/1.json
   def destroy
     @holiday.destroy
     respond_to do |format|
       format.html { redirect_to holidays_url, notice: "Holiday was successfully destroyed." }
       format.json { head :no_content }
     end
-end
+  end
 
+  def get_holidays
+    service = HolidayApiService.new.get_holidays
+    redirect_to holidays_path, notice: "Holiday was successfully imported."
+  end
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_holiday
       @holiday = Holiday.find(params[:id])
     end

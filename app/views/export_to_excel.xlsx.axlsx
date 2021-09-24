@@ -1,0 +1,5 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "tests") do |sheet|
+  @tests.each do |test|
+    sheet.add_row [test.title, test.price]
+end

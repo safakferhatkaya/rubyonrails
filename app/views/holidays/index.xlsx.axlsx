@@ -1,0 +1,8 @@
+wb = xlsx_package.workbook
+  wb.add_worksheet(name: "Holidays") do |sheet|
+    sheet.add_row ["Holiday", "Country"]
+    sheet.add_row []
+    @holidays.each do |holiday|
+      sheet.add_row [holiday.holiday_name, holiday.country]
+    end
+  end
